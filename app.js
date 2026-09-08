@@ -130,16 +130,6 @@
       card_type: "Airbnb",
     },
     {
-      id: 13,
-      name: "PUBG UC Card - 60 UC",
-      desc: "60 Unknown Cash for PUBG",
-      price: 1,
-      color: "from-yellow-500 to-orange-600",
-      icon: "🔫",
-      category: "gaming",
-      card_type: "PUBG",
-    },
-    {
       id: 14,
       name: "PUBG UC Card - 5000 UC",
       desc: "5000 Unknown Cash for PUBG",
@@ -150,40 +140,10 @@
       card_type: "PUBG",
     },
     {
-      id: 15,
-      name: "PUBG UC Card - 660 UC",
-      desc: "660 Unknown Cash for PUBG",
-      price: 10,
-      color: "from-yellow-500 to-orange-600",
-      icon: "🔫",
-      category: "gaming",
-      card_type: "PUBG",
-    },
-    {
-      id: 16,
-      name: "PUBG UC Card - 1800 UC",
-      desc: "1800 Unknown Cash for PUBG",
-      price: 25,
-      color: "from-yellow-500 to-orange-600",
-      icon: "🔫",
-      category: "gaming",
-      card_type: "PUBG",
-    },
-    {
       id: 17,
       name: "PUBG UC Card - 50000 UC",
       desc: "50000 Unknown Cash for PUBG",
       price: 50,
-      color: "from-yellow-500 to-orange-600",
-      icon: "🔫",
-      category: "gaming",
-      card_type: "PUBG",
-    },
-    {
-      id: 18,
-      name: "PUBG UC Card - 8100 UC",
-      desc: "8100 Unknown Cash for PUBG",
-      price: 100,
       color: "from-yellow-500 to-orange-600",
       icon: "🔫",
       category: "gaming",
@@ -414,7 +374,7 @@
         return `
         <article class="product-card">
           <div class="card-visual" style="background: linear-gradient(135deg, ${getGradientColors(p.color)})">
-            <span class="card-icon">${p.icon}</span>
+            ${p.card_type === "PUBG" ? `<img class="card-thumbnail-image" src="pubg.jpeg" alt="${p.name}" />` : `<span class="card-icon">${p.icon}</span>`}
             <span class="card-category">${p.category}</span>
           </div>
           <div class="product-card-body">

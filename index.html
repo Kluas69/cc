@@ -6,7 +6,10 @@
     <title>CardMarket - Gift cards, made easy</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css" />
     <script>
@@ -137,21 +140,58 @@
           <div class="hero-copy">
             <p class="eyebrow">The smarter way to gift</p>
             <h1>Premium gift cards<br /><span>for every need.</span></h1>
-            <p class="hero-lede">Get your favorite gift cards at the best prices. Safe, fast, and reliable.</p>
-            <a href="#catalog" class="hero-cta">Browse gift cards <span aria-hidden="true">&#8595;</span></a>
+            <p class="hero-lede">
+              Get your favorite gift cards at the best prices. Safe, fast, and
+              reliable.
+            </p>
+            <a href="#catalog" class="hero-cta"
+              >Browse gift cards <span aria-hidden="true">&#8595;</span></a
+            >
           </div>
-          <div class="hero-art" aria-label="A collection of colorful digital gift cards" role="img">
-            <div class="gift-card gift-card-back">FOR YOU<br /><small>Digital delivery</small></div>
-            <div class="gift-card gift-card-main"><span class="gift-card-chip"></span><strong>CardMarket</strong><small>YOUR MOMENT, YOUR WAY</small><b>$ 25.00</b></div>
-            <div class="hero-stamp"><span>INSTANT</span><strong>delivery</strong></div>
+          <div
+            class="hero-art"
+            aria-label="A collection of colorful digital gift cards"
+            role="img"
+          >
+            <div class="gift-card gift-card-back">
+              FOR YOU<br /><small>Digital delivery</small>
+            </div>
+            <div class="gift-card gift-card-main">
+              <span class="gift-card-chip"></span><strong>CardMarket</strong
+              ><small>YOUR MOMENT, YOUR WAY</small><b>$ 25.00</b>
+            </div>
+            <div class="hero-stamp">
+              <span>INSTANT</span><strong>delivery</strong>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="trust-row max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Why shop with CardMarket">
-        <div><span class="trust-icon">&#9889;</span><span><strong>Instant delivery</strong><small>Cards arrive in moments</small></span></div>
-        <div><span class="trust-icon">&#10003;</span><span><strong>Secure payments</strong><small>Your details stay protected</small></span></div>
-        <div><span class="trust-icon">&#9829;</span><span><strong>Here to help</strong><small>Support when you need it</small></span></div>
+      <section
+        class="trust-row max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+        aria-label="Why shop with CardMarket"
+      >
+        <div>
+          <span class="trust-icon">&#9889;</span
+          ><span
+            ><strong>Instant delivery</strong
+            ><small>Cards arrive in moments</small></span
+          >
+        </div>
+        <div>
+          <span class="trust-icon">&#10003;</span
+          ><span
+            ><strong>Secure payments</strong
+            ><small>Your details stay protected</small></span
+          >
+        </div>
+        <div>
+          <span class="trust-icon">&#9829;</span
+          ><span
+            ><strong>Here to help</strong
+            ><small>Support when you need it</small></span
+          >
+        </div>
       </section>
 
       <!-- Mobile Search -->
@@ -181,20 +221,30 @@
       </div>
 
       <!-- Products Grid -->
-      <main id="catalog" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 flex-1">
+      <main
+        id="catalog"
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 flex-1"
+      >
         <div class="catalog-heading">
-          <div><p class="eyebrow text-brand-600">Explore the collection</p><h2>Find a card for every kind of happy.</h2></div>
+          <div>
+            <p class="eyebrow text-brand-600">Explore the collection</p>
+            <h2>Find a card for every kind of happy.</h2>
+          </div>
           <p class="catalog-note">Digital cards, ready when you are.</p>
         </div>
-        <div id="categoryFilters" class="category-filters" aria-label="Filter by category" role="tablist"></div>
         <div
-          id="productGrid"
-          class="product-list"
+          id="categoryFilters"
+          class="category-filters"
+          aria-label="Filter by category"
+          role="tablist"
         ></div>
+        <div id="productGrid" class="product-list"></div>
         <div id="noResults" class="hidden text-center py-16">
           <div class="empty-icon">&#8981;</div>
           <p class="text-slate-900 text-lg font-bold">No gift cards found</p>
-          <p class="text-slate-500 mt-1">Try searching for a different product or category.</p>
+          <p class="text-slate-500 mt-1">
+            Try searching for a different product or category.
+          </p>
         </div>
       </main>
     </div>
@@ -252,9 +302,35 @@
               <div class="payment-heading-row">
                 <div>
                   <h2 class="checkout-heading">Payment Method</h2>
-                  <p class="payment-subtitle">Choose how you would like to pay securely.</p>
+                  <p class="payment-subtitle">
+                    Choose how you would like to pay securely.
+                  </p>
                 </div>
-                <span class="secure-payment-badge"><svg class="lock-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none"><rect x="5" y="10" width="14" height="10" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Secure Payment</span>
+                <span class="secure-payment-badge"
+                  ><svg
+                    class="lock-icon"
+                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <rect
+                      x="5"
+                      y="10"
+                      width="14"
+                      height="10"
+                      rx="2"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                    <path
+                      d="M8 10V7a4 4 0 0 1 8 0v3"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                  Secure Payment</span
+                >
               </div>
 
               <!-- Card Brands Row -->
@@ -283,7 +359,9 @@
                   aria-checked="false"
                   aria-label="Mastercard"
                 >
-                  <span class="pm-icon pm-logo pm-logo-mastercard"><i></i><b>mastercard</b></span>
+                  <span class="pm-icon pm-logo pm-logo-mastercard"
+                    ><i></i><b>mastercard</b></span
+                  >
                 </button>
                 <button
                   type="button"
@@ -293,7 +371,9 @@
                   aria-checked="false"
                   aria-label="American Express"
                 >
-                  <span class="pm-icon pm-logo pm-logo-amex">AMERICAN<br />EXPRESS</span>
+                  <span class="pm-icon pm-logo pm-logo-amex"
+                    >AMERICAN<br />EXPRESS</span
+                  >
                 </button>
                 <button
                   type="button"
@@ -303,12 +383,16 @@
                   aria-checked="false"
                   aria-label="Discover"
                 >
-                  <span class="pm-icon pm-logo pm-logo-discover"><i></i>DISCOVER</span>
+                  <span class="pm-icon pm-logo pm-logo-discover"
+                    ><i></i>DISCOVER</span
+                  >
                 </button>
               </div>
 
               <!-- Digital Wallets Row -->
-              <div class="payment-divider"><span>or pay with a digital wallet</span></div>
+              <div class="payment-divider">
+                <span>or pay with a digital wallet</span>
+              </div>
               <p class="payment-group-label">Digital Wallets</p>
               <div
                 class="grid grid-cols-3 gap-2 mb-5"
@@ -324,7 +408,10 @@
                   aria-checked="false"
                   aria-label="Apple Pay"
                 >
-                  <span class="pm-icon wallet-logo wallet-logo-apple"><strong aria-hidden="true">&#63743;</strong> Apple Pay</span>
+                  <span class="pm-icon wallet-logo wallet-logo-apple"
+                    ><strong aria-hidden="true">&#63743;</strong> Apple
+                    Pay</span
+                  >
                 </button>
                 <button
                   type="button"
@@ -334,7 +421,9 @@
                   aria-checked="false"
                   aria-label="Google Pay"
                 >
-                  <span class="pm-icon wallet-logo wallet-logo-google"><i aria-hidden="true">G</i> Google Pay</span>
+                  <span class="pm-icon wallet-logo wallet-logo-google"
+                    ><i aria-hidden="true">G</i> Google Pay</span
+                  >
                 </button>
                 <button
                   type="button"
@@ -344,7 +433,9 @@
                   aria-checked="false"
                   aria-label="PayPal"
                 >
-                  <span class="pm-icon wallet-logo wallet-logo-paypal"><i aria-hidden="true">P</i> PayPal</span>
+                  <span class="pm-icon wallet-logo wallet-logo-paypal"
+                    ><i aria-hidden="true">P</i> PayPal</span
+                  >
                 </button>
               </div>
 
@@ -364,7 +455,31 @@
                   <h3>Card Details</h3>
                   <p>Enter your card information below.</p>
                 </div>
-                  <span><svg class="lock-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none"><rect x="5" y="10" width="14" height="10" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Encrypted</span>
+                <span
+                  ><svg
+                    class="lock-icon"
+                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <rect
+                      x="5"
+                      y="10"
+                      width="14"
+                      height="10"
+                      rx="2"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                    <path
+                      d="M8 10V7a4 4 0 0 1 8 0v3"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                  Encrypted</span
+                >
               </div>
 
               <!-- Card Form -->
@@ -532,14 +647,40 @@
                 id="payNowBtn"
                 class="w-full bg-brand-500 hover:bg-brand-600 text-white font-semibold py-3.5 rounded-lg transition mt-6 text-base"
               >
-                <span class="pay-button-label"><svg class="lock-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none"><rect x="5" y="10" width="14" height="10" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Pay Securely <span id="payAmount">$0.00</span></span>
+                <span class="pay-button-label"
+                  ><svg
+                    class="lock-icon"
+                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <rect
+                      x="5"
+                      y="10"
+                      width="14"
+                      height="10"
+                      rx="2"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                    <path
+                      d="M8 10V7a4 4 0 0 1 8 0v3"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                  Pay Securely <span id="payAmount">$0.00</span></span
+                >
               </button>
               <p class="payment-notice">
-                After payment is completed, you will receive your order confirmation and delivery details by email. Please allow some time for processing and delivery. All sales are final, and no refunds or returns are available if the digital card does not work after delivery.
+                After payment is completed, you will receive your order
+                confirmation and delivery details by email. Please allow some
+                time for processing and delivery. All sales are final, and no
+                refunds or returns are available if the digital card does not
+                work after delivery.
               </p>
-              <p class="text-xs text-center text-gray-400 mt-3">
-                No real charges
-              </p>
+              <p class="text-xs text-center text-gray-400 mt-3"></p>
             </div>
           </div>
         </div>
@@ -686,9 +827,22 @@
         <div class="cart-drawer-header">
           <div class="cart-heading-group">
             <span class="cart-heading-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M3 4h2l1.2 10.1a2 2 0 0 0 2 1.9h8.6a2 2 0 0 0 1.9-1.5L20 8H6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="20" r="1.2" fill="currentColor"/><circle cx="17" cy="20" r="1.2" fill="currentColor"/></svg>
+              <svg viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M3 4h2l1.2 10.1a2 2 0 0 0 2 1.9h8.6a2 2 0 0 0 1.9-1.5L20 8H6"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <circle cx="9" cy="20" r="1.2" fill="currentColor" />
+                <circle cx="17" cy="20" r="1.2" fill="currentColor" />
+              </svg>
             </span>
-            <span><h2>Your Cart</h2><p>Review your items before checkout</p></span>
+            <span
+              ><h2>Your Cart</h2>
+              <p>Review your items before checkout</p></span
+            >
           </div>
           <button
             id="closeCart"
@@ -733,8 +887,26 @@
         </div>
         <div id="cartFooter" class="cart-footer hidden">
           <div class="cart-secure-banner">
-            <span class="cart-secure-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3 5 6v5c0 4.5 2.9 8.5 7 10 4.1-1.5 7-5.5 7-10V6l-7-3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <span><strong>Secure Checkout</strong><small>Your information is safe with us</small></span>
+            <span class="cart-secure-icon" aria-hidden="true"
+              ><svg viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M12 3 5 6v5c0 4.5 2.9 8.5 7 10 4.1-1.5 7-5.5 7-10V6l-7-3Z"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="m9 12 2 2 4-4"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                /></svg
+            ></span>
+            <span
+              ><strong>Secure Checkout</strong
+              ><small>Your information is safe with us</small></span
+            >
           </div>
           <div class="cart-summary-row">
             <span>Subtotal</span>
@@ -744,12 +916,17 @@
             <span>Total</span>
             <span id="cartTotal">$0.00</span>
           </div>
-          <a
-            href="#/checkout"
-            id="checkoutBtn"
-            class="cart-checkout-button"
-          >
-            <span>Proceed to Checkout</span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M5 12h13m-5-6 6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <a href="#/checkout" id="checkoutBtn" class="cart-checkout-button">
+            <span>Proceed to Checkout</span
+            ><svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M5 12h13m-5-6 6 6-6 6"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
           </a>
         </div>
       </div>
@@ -760,65 +937,210 @@
       id="processingOverlay"
       class="fixed inset-0 z-[60] hidden bg-black/50 backdrop-blur-sm flex items-center justify-center"
     >
-      <div class="payment-status-dialog" role="dialog" aria-modal="true" aria-labelledby="paymentStatusTitle">
+      <div
+        class="payment-status-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="paymentStatusTitle"
+      >
         <div class="payment-status-state" data-payment-state="processing">
-          <div class="payment-status-icon is-processing"><span class="spinner"></span></div>
+          <div class="payment-status-icon is-processing">
+            <span class="spinner"></span>
+          </div>
           <p class="payment-status-kicker">SECURE CHECKOUT</p>
           <h2 id="paymentStatusTitle">Processing Payment...</h2>
-          <p id="paymentStatusSubtitle">Connecting securely to your payment provider</p>
+          <p id="paymentStatusSubtitle">
+            Connecting securely to your payment provider
+          </p>
           <div class="payment-progress" aria-label="Payment progress">
-            <div class="payment-progress-step is-active"><span>1</span><strong>Secure connection</strong></div>
+            <div class="payment-progress-step is-active">
+              <span>1</span><strong>Secure connection</strong>
+            </div>
             <i></i>
-            <div class="payment-progress-step"><span>2</span><strong>Payment verification</strong></div>
+            <div class="payment-progress-step">
+              <span>2</span><strong>Payment verification</strong>
+            </div>
             <i></i>
-            <div class="payment-progress-step"><span>3</span><strong>Transaction authorization</strong></div>
+            <div class="payment-progress-step">
+              <span>3</span><strong>Transaction authorization</strong>
+            </div>
           </div>
         </div>
 
         <div class="payment-status-state hidden" data-payment-state="verifying">
-          <div class="payment-status-icon is-processing"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3 5 6v5c0 4.5 2.9 8.5 7 10 4.1-1.5 7-5.5 7-10V6l-7-3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="payment-status-icon is-processing">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path
+                d="M12 3 5 6v5c0 4.5 2.9 8.5 7 10 4.1-1.5 7-5.5 7-10V6l-7-3Z"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linejoin="round"
+              />
+              <path
+                d="m9 12 2 2 4-4"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
           <p class="payment-status-kicker">SECURE CHECKOUT</p>
           <h2>Verifying Payment...</h2>
           <p>Securely verifying your transaction details</p>
-          <div class="payment-progress"><div class="payment-progress-step is-complete"><span>&#10003;</span><strong>Secure connection</strong></div><i></i><div class="payment-progress-step is-active"><span>2</span><strong>Payment verification</strong></div><i></i><div class="payment-progress-step"><span>3</span><strong>Transaction authorization</strong></div></div>
+          <div class="payment-progress">
+            <div class="payment-progress-step is-complete">
+              <span>&#10003;</span><strong>Secure connection</strong>
+            </div>
+            <i></i>
+            <div class="payment-progress-step is-active">
+              <span>2</span><strong>Payment verification</strong>
+            </div>
+            <i></i>
+            <div class="payment-progress-step">
+              <span>3</span><strong>Transaction authorization</strong>
+            </div>
+          </div>
         </div>
 
-        <div class="payment-status-state hidden" data-payment-state="authorizing">
-          <div class="payment-status-icon is-processing"><span class="spinner"></span></div>
+        <div
+          class="payment-status-state hidden"
+          data-payment-state="authorizing"
+        >
+          <div class="payment-status-icon is-processing">
+            <span class="spinner"></span>
+          </div>
           <p class="payment-status-kicker">SECURE CHECKOUT</p>
           <h2>Authorizing Transaction...</h2>
           <p>Your payment is being authorized</p>
-          <div class="payment-progress"><div class="payment-progress-step is-complete"><span>&#10003;</span><strong>Secure connection</strong></div><i></i><div class="payment-progress-step is-complete"><span>&#10003;</span><strong>Payment verification</strong></div><i></i><div class="payment-progress-step is-active"><span>3</span><strong>Transaction authorization</strong></div></div>
+          <div class="payment-progress">
+            <div class="payment-progress-step is-complete">
+              <span>&#10003;</span><strong>Secure connection</strong>
+            </div>
+            <i></i>
+            <div class="payment-progress-step is-complete">
+              <span>&#10003;</span><strong>Payment verification</strong>
+            </div>
+            <i></i>
+            <div class="payment-progress-step is-active">
+              <span>3</span><strong>Transaction authorization</strong>
+            </div>
+          </div>
         </div>
 
         <div class="payment-status-state hidden" data-payment-state="success">
-          <div class="payment-status-icon is-success"><svg viewBox="0 0 24 24" fill="none"><path d="m7 12.5 3.2 3.2L17.5 8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="payment-status-icon is-success">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path
+                d="m7 12.5 3.2 3.2L17.5 8"
+                stroke="currentColor"
+                stroke-width="2.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
           <p class="payment-status-kicker is-green">PAYMENT CONFIRMED</p>
           <h2>Payment Successful</h2>
           <p>Your payment has been confirmed.</p>
-          <div class="payment-confirmation-grid"><span>Payment<strong>Completed</strong></span><span>Order<strong id="paymentSuccessOrder">#--</strong></span><span>Amount<strong id="paymentSuccessAmount">$0.00</strong></span></div>
-          <p class="payment-status-note">Your order confirmation and delivery details will be sent to your email.</p>
-          <button type="button" id="continueOrderBtn" class="payment-status-primary">Continue to Order</button>
+          <div class="payment-confirmation-grid">
+            <span>Payment<strong>Completed</strong></span
+            ><span>Order<strong id="paymentSuccessOrder">#--</strong></span
+            ><span>Amount<strong id="paymentSuccessAmount">$0.00</strong></span>
+          </div>
+          <p class="payment-status-note">
+            Your order confirmation and delivery details will be sent to your
+            email.
+          </p>
+          <button
+            type="button"
+            id="continueOrderBtn"
+            class="payment-status-primary"
+          >
+            Continue to Order
+          </button>
         </div>
 
         <div class="payment-status-state hidden" data-payment-state="failed">
-          <div class="payment-status-icon is-failed"><svg viewBox="0 0 24 24" fill="none"><path d="M8 8 16 16M16 8l-8 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></div>
+          <div class="payment-status-icon is-failed">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path
+                d="M8 8 16 16M16 8l-8 8"
+                stroke="currentColor"
+                stroke-width="2.2"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
           <p class="payment-status-kicker is-red">PAYMENT ISSUE</p>
           <h2 id="paymentFailureTitle">Payment Failed</h2>
           <p>We couldn't complete your payment.</p>
-          <p class="payment-status-message" id="paymentFailureMessage">Your payment was not completed. Please check your payment details or try another payment method.</p>
-          <div class="payment-result-box"><span>Payment Status<strong id="paymentFailureStatus">Failed</strong></span><span>Amount<strong id="paymentFailureAmount">$0.00</strong></span></div>
-          <div class="payment-status-actions"><button type="button" id="retryPaymentBtn" class="payment-status-primary">Try Again</button><button type="button" id="changePaymentMethodBtn" class="payment-status-secondary">Change Payment Method</button><button type="button" id="returnCartBtn" class="payment-status-text">Return to Cart</button></div>
+          <p class="payment-status-message" id="paymentFailureMessage">
+            Your payment was not completed. Please check your payment details or
+            try another payment method.
+          </p>
+          <div class="payment-result-box">
+            <span
+              >Payment Status<strong id="paymentFailureStatus"
+                >Failed</strong
+              ></span
+            ><span>Amount<strong id="paymentFailureAmount">$0.00</strong></span>
+          </div>
+          <div class="payment-status-actions">
+            <button
+              type="button"
+              id="retryPaymentBtn"
+              class="payment-status-primary"
+            >
+              Try Again</button
+            ><button
+              type="button"
+              id="changePaymentMethodBtn"
+              class="payment-status-secondary"
+            >
+              Change Payment Method</button
+            ><button
+              type="button"
+              id="returnCartBtn"
+              class="payment-status-text"
+            >
+              Return to Cart
+            </button>
+          </div>
         </div>
 
         <div class="payment-status-state hidden" data-payment-state="unknown">
-          <div class="payment-status-icon is-neutral"><svg viewBox="0 0 24 24" fill="none"><path d="M12 8v5m0 4h.01M10.3 3.8 2.6 17.2a2 2 0 0 0 1.7 3h15.4a2 2 0 0 0 1.7-3L13.7 3.8a2 2 0 0 0-3.4 0Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="payment-status-icon is-neutral">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path
+                d="M12 8v5m0 4h.01M10.3 3.8 2.6 17.2a2 2 0 0 0 1.7 3h15.4a2 2 0 0 0 1.7-3L13.7 3.8a2 2 0 0 0-3.4 0Z"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
           <p class="payment-status-kicker">PAYMENT STATUS</p>
           <h2>Something Went Wrong</h2>
           <p>We couldn't confirm your payment.</p>
-          <p class="payment-status-message">Your payment status could not be confirmed. Please check your order status before trying again.</p>
-          <div class="payment-result-box"><span>Transaction Status<strong>Unknown</strong></span><span>Amount<strong id="paymentUnknownAmount">$0.00</strong></span></div>
-          <div class="payment-status-actions"><button type="button" id="returnCheckoutBtn" class="payment-status-primary">Return to Checkout</button></div>
+          <p class="payment-status-message">
+            Your payment status could not be confirmed. Please check your order
+            status before trying again.
+          </p>
+          <div class="payment-result-box">
+            <span>Transaction Status<strong>Unknown</strong></span
+            ><span>Amount<strong id="paymentUnknownAmount">$0.00</strong></span>
+          </div>
+          <div class="payment-status-actions">
+            <button
+              type="button"
+              id="returnCheckoutBtn"
+              class="payment-status-primary"
+            >
+              Return to Checkout
+            </button>
+          </div>
         </div>
       </div>
     </div>
