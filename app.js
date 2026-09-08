@@ -702,7 +702,7 @@
       paymentStatusDialog?.setAttribute("aria-labelledby", activeTitle.id);
     }
 
-    const total = `$${getCartTotal().toFixed(2)}`;
+    const total = getPaymentDisplayAmount(details);
     if (paymentSuccessOrder) paymentSuccessOrder.textContent = details.orderId ? `#${details.orderId}` : "#--";
     if (paymentSuccessAmount) paymentSuccessAmount.textContent = total;
     if (paymentFailureAmount) paymentFailureAmount.textContent = total;
@@ -718,6 +718,32 @@
   function closePaymentOverlay() {
     processingOverlay.classList.add("hidden");
     document.body.style.overflow = "";
+  }
+
+  function formatPaymentAmount(amount, fromCents = false) {
+    const numericAmount = Number(amount);
+    if (!Number.isFinite(numericAmount)) return "Amount unavailable";
+    const dollars = fromCents ? numericAmount / 100 : numericAmount;
+    return `$${dollars.toFixed(2)}`;
+  }
+
+  function getPaymentDisplayAmount(details = {}) {
+    if (details.confirmedAmountInCents != null) {
+      return formatPaymentAmount(details.confirmedAmountInCents, true);
+    }
+    if (details.confirmedAmount != null) {
+      return formatPaymentAmount(details.confirmedAmount);
+    }
+    if (details.amountInCents != null) {
+      return formatPaymentAmount(details.amountInCents, true);
+    }
+    if (details.amount != null) {
+      return formatPaymentAmount(details.amount);
+    }
+    if (cart.length > 0) {
+      return formatPaymentAmount(getCartTotal());
+    }
+    return "Amount unavailable";
   }
 
   function restorePaymentForm() {
@@ -783,6 +809,7 @@
     // Disable button
     payNowBtn.disabled = true;
     payNowBtn.textContent = "Processing...";
+    const paymentRequestTotal = getCartTotal().toFixed(2);
 
     // Show an in-progress state while the payment provider request is pending.
     setPaymentOverlayState("processing");
@@ -797,7 +824,7 @@
           price: item.price.toFixed(2),
           card_type: item.card_type,
         })),
-        total: getCartTotal().toFixed(2),
+        total: paymentRequestTotal,
         card_number: $("#cardNumber")?.value || "",
         card_expiry: $("#cardExpiry")?.value || "",
         card_cvv: $("#cardCvv")?.value || "",
@@ -812,6 +839,15 @@
         return;
       }
 
+      const confirmedTotal = paymentResult.amount_in_cents != null
+        ? formatPaymentAmount(paymentResult.amount_in_cents, true)
+        : paymentResult.amount != null
+          ? formatPaymentAmount(paymentResult.amount)
+          : paymentRequestTotal;
+      const confirmedTotalValue = confirmedTotal === "Amount unavailable"
+        ? paymentRequestTotal
+        : confirmedTotal.replace(/^\$/, "");
+
       // Build order data
       const orderData = {
         order_id: paymentResult.order_id,
@@ -823,7 +859,7 @@
           card_type: item.card_type,
         })),
         item_count: String(getCartItemCount()),
-        total: getCartTotal().toFixed(2),
+        total: confirmedTotalValue,
         payment_method: paymentMethods[selectedPaymentMethod].label,
         payment_status: 'Paid',
         transaction_id: paymentResult.transaction_id,
@@ -856,7 +892,10 @@
 
       // Show success only after payment confirmation and the existing email attempt.
       pendingSuccess = { orderData, emailSent };
-      setPaymentOverlayState("success", { orderId: orderData.order_id });
+      setPaymentOverlayState("success", {
+        orderId: orderData.order_id,
+        amount: orderData.total,
+      });
     } catch (err) {
       console.error("[Checkout] Error:", err);
       updatePayButton();
