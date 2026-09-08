@@ -1,0 +1,765 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CardMarket - Digital Gift Cards</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                50: "#f0f9ff",
+                100: "#e0f2fe",
+                200: "#bae6fd",
+                300: "#7dd3fc",
+                400: "#38bdf8",
+                500: "#0ea5e9",
+                600: "#0284c7",
+                700: "#0369a1",
+                800: "#075985",
+                900: "#0c4a6e",
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-gray-50 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center gap-2">
+            <a href="#/" class="flex items-center gap-2">
+              <div
+                class="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center"
+              >
+                <span class="text-white font-bold text-sm">CM</span>
+              </div>
+              <span class="text-xl font-bold text-gray-900">CardMarket</span>
+            </a>
+          </div>
+          <nav class="hidden sm:flex items-center gap-1">
+            <a
+              href="#/"
+              data-route="/"
+              class="nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:text-brand-600 hover:bg-brand-50 transition"
+              >Shop</a
+            >
+            <a
+              href="#/checkout"
+              data-route="/checkout"
+              class="nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:text-brand-600 hover:bg-brand-50 transition"
+              >Checkout</a
+            >
+          </nav>
+          <div class="flex-1 max-w-md mx-8 hidden sm:block">
+            <div class="relative">
+              <input
+                id="searchInput"
+                type="text"
+                placeholder="Search gift cards..."
+                class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition"
+              />
+              <svg
+                class="absolute left-3 top-2.5 h-5 w-5 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </div>
+          </div>
+          <button
+            id="cartBtn"
+            class="relative p-2 text-gray-600 hover:text-brand-600 transition"
+            aria-label="Open cart"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"
+              />
+            </svg>
+            <span
+              id="cartBadge"
+              class="absolute -top-1 -right-1 bg-brand-500 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center hidden"
+              >0</span
+            >
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Nav -->
+    <div
+      class="sm:hidden bg-white border-b border-gray-200 px-4 py-2 flex gap-2"
+    >
+      <a
+        href="#/"
+        data-route="/"
+        class="nav-link flex-1 text-center px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:text-brand-600 hover:bg-brand-50 transition"
+        >Shop</a
+      >
+      <a
+        href="#/checkout"
+        data-route="/checkout"
+        class="nav-link flex-1 text-center px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:text-brand-600 hover:bg-brand-50 transition"
+        >Checkout</a
+      >
+    </div>
+
+    <!-- ==================== SHOP PAGE ==================== -->
+    <div id="shopPage">
+      <!-- Hero -->
+      <section
+        class="bg-gradient-to-r from-brand-600 to-brand-800 text-white py-12"
+      >
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 class="text-3xl sm:text-4xl font-bold mb-3">
+            Digital Gift Cards
+          </h1>
+          <p class="text-brand-100 text-lg">
+            Instant delivery. Perfect for any occasion.
+          </p>
+        </div>
+      </section>
+
+      <!-- Mobile Search -->
+      <div class="sm:hidden px-4 pt-4">
+        <div class="relative">
+          <input
+            id="searchInputMobile"
+            type="text"
+            placeholder="Search gift cards..."
+            class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition"
+          />
+          <svg
+            class="absolute left-3 top-2.5 h-5 w-5 text-gray-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            />
+          </svg>
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-1">
+        <div
+          id="productGrid"
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+        ></div>
+        <div id="noResults" class="hidden text-center py-16">
+          <p class="text-gray-500 text-lg">
+            No cards found matching your search.
+          </p>
+        </div>
+      </main>
+    </div>
+
+    <!-- ==================== CHECKOUT PAGE ==================== -->
+    <div id="checkoutPage" class="hidden">
+      <div class="max-w-5xl mx-auto px-4 py-8">
+        <button
+          id="backToShop"
+          class="flex items-center gap-2 text-gray-600 hover:text-brand-600 transition mb-6 font-medium"
+        >
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+          Back to Shop
+        </button>
+
+        <h1 class="text-2xl font-bold text-gray-900 mb-6">Checkout</h1>
+
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+          <!-- Left Column -->
+          <div class="lg:col-span-3 space-y-6">
+            <!-- Contact Information -->
+            <div class="checkout-card">
+              <h2 class="checkout-heading">Contact Information</h2>
+              <div>
+                <label for="checkoutEmail" class="form-label"
+                  >Email Address</label
+                >
+                <input
+                  id="checkoutEmail"
+                  type="email"
+                  required
+                  placeholder="you@example.com"
+                  class="form-input"
+                />
+                <p class="form-help">
+                  Your order confirmation will be sent to this address.
+                </p>
+              </div>
+            </div>
+
+            <!-- Payment Method -->
+            <div class="checkout-card">
+              <h2 class="checkout-heading">Payment Method</h2>
+
+              <!-- Card Brands Row -->
+              <p
+                class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-3"
+              >
+                Card
+              </p>
+              <div
+                class="grid grid-cols-4 gap-2 mb-5"
+                id="cardMethods"
+                role="radiogroup"
+                aria-label="Card payment methods"
+              >
+                <button
+                  type="button"
+                  class="pm-btn active"
+                  data-method="visa"
+                  role="radio"
+                  aria-checked="true"
+                  aria-label="Visa"
+                >
+                  <span class="pm-icon">VISA</span>
+                </button>
+                <button
+                  type="button"
+                  class="pm-btn"
+                  data-method="mastercard"
+                  role="radio"
+                  aria-checked="false"
+                  aria-label="Mastercard"
+                >
+                  <span class="pm-icon">MC</span>
+                </button>
+                <button
+                  type="button"
+                  class="pm-btn"
+                  data-method="amex"
+                  role="radio"
+                  aria-checked="false"
+                  aria-label="American Express"
+                >
+                  <span class="pm-icon">AMEX</span>
+                </button>
+                <button
+                  type="button"
+                  class="pm-btn"
+                  data-method="discover"
+                  role="radio"
+                  aria-checked="false"
+                  aria-label="Discover"
+                >
+                  <span class="pm-icon">DISC</span>
+                </button>
+              </div>
+
+              <!-- Digital Wallets Row -->
+              <p
+                class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-3"
+              >
+                Digital Wallets
+              </p>
+              <div
+                class="grid grid-cols-3 gap-2 mb-5"
+                id="walletMethods"
+                role="radiogroup"
+                aria-label="Digital wallet payment methods"
+              >
+                <button
+                  type="button"
+                  class="pm-btn"
+                  data-method="apple_pay"
+                  role="radio"
+                  aria-checked="false"
+                  aria-label="Apple Pay"
+                >
+                  <span class="pm-icon text-xs">Pay</span>
+                </button>
+                <button
+                  type="button"
+                  class="pm-btn"
+                  data-method="google_pay"
+                  role="radio"
+                  aria-checked="false"
+                  aria-label="Google Pay"
+                >
+                  <span class="pm-icon text-xs">Pay</span>
+                </button>
+                <button
+                  type="button"
+                  class="pm-btn"
+                  data-method="paypal"
+                  role="radio"
+                  aria-checked="false"
+                  aria-label="PayPal"
+                >
+                  <span class="pm-icon text-xs">Pay</span>
+                </button>
+              </div>
+
+              <!-- Card Brand Indicator -->
+              <div id="cardBrandIndicator" class="flex items-center gap-2 mb-4">
+                <div
+                  id="brandDot"
+                  class="w-2 h-2 rounded-full bg-brand-500"
+                ></div>
+                <span id="brandLabel" class="text-sm font-medium text-gray-700"
+                  >Visa</span
+                >
+              </div>
+
+              <!-- Card Form -->
+              <form id="paymentForm" class="space-y-4">
+                <div>
+                  <label for="cardName" class="form-label"
+                    >Cardholder Name</label
+                  >
+                  <input
+                    id="cardName"
+                    type="text"
+                    required
+                    placeholder="John Doe"
+                    class="form-input"
+                  />
+                </div>
+                <div>
+                  <label for="cardNumber" class="form-label">Card Number</label>
+                  <div class="relative">
+                    <input
+                      id="cardNumber"
+                      type="text"
+                      required
+                      placeholder="4242 4242 4242 4242"
+                      maxlength="19"
+                      class="form-input pr-12 font-mono tracking-wider"
+                    />
+                    <div
+                      id="cardBrandLogo"
+                      class="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400"
+                    >
+                      VISA
+                    </div>
+                  </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label for="cardExpiry" class="form-label"
+                      >Expiration</label
+                    >
+                    <input
+                      id="cardExpiry"
+                      type="text"
+                      required
+                      placeholder="12 / 30"
+                      maxlength="7"
+                      class="form-input font-mono"
+                    />
+                  </div>
+                  <div>
+                    <label for="cardCvv" class="form-label"
+                      >Security Code</label
+                    >
+                    <input
+                      id="cardCvv"
+                      type="text"
+                      required
+                      placeholder="123"
+                      maxlength="4"
+                      class="form-input font-mono"
+                    />
+                  </div>
+                </div>
+                <p class="text-xs text-gray-400 pt-1">
+                  after payment you will recieve the email
+                </p>
+              </form>
+
+              <!-- Apple Pay Button -->
+              <div id="applePayForm" class="hidden">
+                <button
+                  type="button"
+                  id="applePayBtn"
+                  class="w-full bg-black hover:bg-gray-800 text-white font-semibold py-3.5 rounded-lg transition flex items-center justify-center gap-2"
+                >
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.52-3.23 0-1.44.65-2.2.46-3.06-.4C3.79 16.17 4.36 9.02 8.93 8.78c1.27.07 2.15.73 2.91.78.89-.18 1.75-.89 2.73-.81 1.16.1 2.04.61 2.59 1.51-2.37 1.42-1.81 4.53.41 5.41-.47 1.23-1.08 2.44-2.52 3.61zM12.05 8.67c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"
+                    />
+                  </svg>
+                  Apple Pay
+                </button>
+                <p class="text-xs text-gray-400 text-center mt-3">
+                  No real transaction.
+                </p>
+              </div>
+
+              <!-- Google Pay Button -->
+              <div id="googlePayForm" class="hidden">
+                <button
+                  type="button"
+                  id="googlePayBtn"
+                  class="w-full bg-white border-2 border-gray-300 hover:border-gray-400 text-gray-700 font-semibold py-3.5 rounded-lg transition flex items-center justify-center gap-2"
+                >
+                  <svg class="w-5 h-5" viewBox="0 0 24 24">
+                    <path
+                      d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"
+                      fill="#4285F4"
+                    />
+                    <path
+                      d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                      fill="#34A853"
+                    />
+                    <path
+                      d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                      fill="#FBBC05"
+                    />
+                    <path
+                      d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                      fill="#EA4335"
+                    />
+                  </svg>
+                  Google Pay
+                </button>
+                <p class="text-xs text-gray-400 text-center mt-3">
+                  No real transaction.
+                </p>
+              </div>
+
+              <!-- PayPal Button -->
+              <div id="paypalForm" class="hidden">
+                <button
+                  type="button"
+                  id="paypalBtn"
+                  class="w-full bg-[#FFC439] hover:bg-[#f0b72a] text-[#003087] font-bold py-3.5 rounded-lg transition flex items-center justify-center gap-2"
+                >
+                  <svg class="w-6 h-6" viewBox="0 0 24 24" fill="#003087">
+                    <path
+                      d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106z"
+                    />
+                  </svg>
+                  PayPal
+                </button>
+                <p class="text-xs text-gray-400 text-center mt-3">
+                  No real transaction.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Order Summary -->
+          <div class="lg:col-span-2">
+            <div class="checkout-card lg:sticky lg:top-24">
+              <h2 class="checkout-heading">Order Summary</h2>
+              <div
+                id="checkoutItems"
+                class="space-y-3 mb-4 max-h-72 overflow-y-auto"
+              ></div>
+              <div class="border-t border-gray-200 pt-4 space-y-2">
+                <div class="flex justify-between text-sm text-gray-500">
+                  <span>Items</span>
+                  <span id="checkoutItemCount">0</span>
+                </div>
+                <div class="flex justify-between text-sm text-gray-500">
+                  <span>Subtotal</span>
+                  <span id="checkoutSubtotal">$0.00</span>
+                </div>
+                <div class="border-t border-gray-200 pt-2 flex justify-between">
+                  <span class="text-base font-bold text-gray-900">Total</span>
+                  <span
+                    id="checkoutTotal"
+                    class="text-base font-bold text-gray-900"
+                    >$0.00</span
+                  >
+                </div>
+              </div>
+              <button
+                id="payNowBtn"
+                class="w-full bg-brand-500 hover:bg-brand-600 text-white font-semibold py-3.5 rounded-lg transition mt-6 text-base"
+              >
+                Pay $0.00
+              </button>
+              <p class="text-xs text-center text-gray-400 mt-3">
+                No real charges
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== SUCCESS PAGE ==================== -->
+    <div id="successPage" class="hidden">
+      <div class="max-w-xl mx-auto px-4 py-12">
+        <!-- Success Header -->
+        <div class="text-center mb-8">
+          <div
+            class="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-5 border-2 border-green-200"
+          >
+            <svg
+              class="w-10 h-10 text-green-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2.5"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+          </div>
+          <h1 class="text-3xl font-bold text-gray-900 mb-2">
+            Payment Successful
+          </h1>
+          <p class="text-gray-500">Payment completed successfully.</p>
+        </div>
+
+        <!-- Order Card -->
+        <div class="checkout-card mb-6">
+          <!-- Order Meta -->
+          <div class="grid grid-cols-2 gap-4 mb-5">
+            <div>
+              <p
+                class="text-[0.65rem] text-gray-400 uppercase tracking-wider font-medium mb-0.5"
+              >
+                Order
+              </p>
+              <p
+                id="successOrderId"
+                class="font-mono font-semibold text-gray-900 text-sm"
+              ></p>
+            </div>
+            <div>
+              <p
+                class="text-[0.65rem] text-gray-400 uppercase tracking-wider font-medium mb-0.5"
+              >
+                Transaction ID
+              </p>
+              <p
+                id="successTransId"
+                class="font-mono font-semibold text-gray-900 text-sm"
+              ></p>
+            </div>
+            <div>
+              <p
+                class="text-[0.65rem] text-gray-400 uppercase tracking-wider font-medium mb-0.5"
+              >
+                Payment Method
+              </p>
+              <p
+                id="successPaymentMethod"
+                class="font-medium text-gray-900 text-sm"
+              ></p>
+            </div>
+            <div>
+              <p
+                class="text-[0.65rem] text-gray-400 uppercase tracking-wider font-medium mb-0.5"
+              >
+                Status
+              </p>
+              <p
+                id="successStatus"
+                class="text-green-600 font-semibold text-sm"
+              >
+                Paid
+              </p>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="mb-5">
+            <p
+              class="text-[0.65rem] text-gray-400 uppercase tracking-wider font-medium mb-0.5"
+            >
+              Confirmation sent to
+            </p>
+            <p id="successEmail" class="text-gray-900 text-sm"></p>
+          </div>
+
+          <!-- Items -->
+          <div class="border-t border-gray-100 pt-4">
+            <p
+              class="text-[0.65rem] text-gray-400 uppercase tracking-wider font-medium mb-3"
+            >
+              Items Purchased
+            </p>
+            <div id="successItems" class="space-y-2"></div>
+          </div>
+
+          <!-- Total -->
+          <div
+            class="border-t border-gray-100 pt-4 mt-4 flex justify-between items-center"
+          >
+            <span class="text-sm font-semibold text-gray-900">Total</span>
+            <span
+              id="successTotal"
+              class="text-xl font-bold text-gray-900"
+            ></span>
+          </div>
+        </div>
+
+        <!-- Email Status -->
+        <div id="emailStatus" class="text-center mb-8"></div>
+
+        <!-- Continue Button -->
+        <div class="text-center">
+          <a
+            href="#/"
+            id="successDone"
+            class="inline-block bg-brand-500 hover:bg-brand-600 text-white font-semibold px-10 py-3 rounded-lg transition"
+          >
+            Continue Shopping
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cart Drawer (overlay, not a route) -->
+    <div id="cartDrawer" class="fixed inset-0 z-50 hidden">
+      <div
+        id="cartBackdrop"
+        class="absolute inset-0 bg-black/50 backdrop-blur-sm"
+      ></div>
+      <div
+        class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl flex flex-col cart-drawer-panel"
+      >
+        <div
+          class="flex items-center justify-between p-5 border-b border-gray-200"
+        >
+          <h2 class="text-lg font-bold text-gray-900">Your Cart</h2>
+          <button
+            id="closeCart"
+            class="text-gray-400 hover:text-gray-600 transition p-1"
+            aria-label="Close cart"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+        <div id="cartItems" class="flex-1 overflow-y-auto p-5 space-y-4"></div>
+        <div
+          id="cartEmpty"
+          class="flex-1 flex flex-col items-center justify-center text-gray-400 hidden"
+        >
+          <svg
+            class="w-16 h-16 mb-3"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.5"
+              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"
+            />
+          </svg>
+          <p class="text-lg font-medium">Cart is empty</p>
+          <p class="text-sm mt-1">Add some gift cards to get started</p>
+        </div>
+        <div id="cartFooter" class="border-t border-gray-200 p-5 hidden">
+          <div class="flex justify-between text-sm text-gray-600 mb-1">
+            <span>Subtotal</span>
+            <span id="cartSubtotal">$0.00</span>
+          </div>
+          <div
+            class="flex justify-between text-base font-bold text-gray-900 mb-4"
+          >
+            <span>Total</span>
+            <span id="cartTotal">$0.00</span>
+          </div>
+          <a
+            href="#/checkout"
+            id="checkoutBtn"
+            class="block w-full bg-brand-500 hover:bg-brand-600 text-white font-semibold py-3 rounded-lg transition text-center"
+          >
+            Proceed to Checkout
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Processing Overlay -->
+    <div
+      id="processingOverlay"
+      class="fixed inset-0 z-[60] hidden bg-black/50 backdrop-blur-sm flex items-center justify-center"
+    >
+      <div
+        class="bg-white rounded-2xl p-8 text-center max-w-sm mx-4 shadow-2xl"
+      >
+        <div class="spinner mb-4"></div>
+        <p class="text-lg font-semibold text-gray-900">Processing Payment...</p>
+        <p class="text-sm text-gray-500 mt-1">Verifying transaction</p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 mt-auto">
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-sm text-gray-400"
+      >
+        CardMarket &middot; No real payments processed
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+      window.EmailServiceConfig = {
+        serviceID: "cardingccofficial",
+        templateID: "template_d6mc2z4",
+        publicKey: "zH4nL9MuX2A_oYq7W",
+      };
+    </script>
+    <script src="services/router.js"></script>
+    <script src="services/paymentService.js"></script>
+    <script src="services/emailService.js"></script>
+    <script src="app.js?v=20260908"></script>
+  </body>
+</html>
