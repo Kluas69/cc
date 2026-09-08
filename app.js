@@ -232,6 +232,7 @@
   // ============================================
   const $ = (sel) => document.querySelector(sel);
   const productGrid = $("#productGrid");
+  const categoryFilters = $("#categoryFilters");
   const searchInput = $("#searchInput");
   const searchInputMobile = $("#searchInputMobile");
   const noResults = $("#noResults");
@@ -263,6 +264,16 @@
   const cardBrandLogo = $("#cardBrandLogo");
   const cardMethods = $("#cardMethods");
   const walletMethods = $("#walletMethods");
+  const paymentStatusStates = document.querySelectorAll("[data-payment-state]");
+  const paymentStatusDialog = $(".payment-status-dialog");
+  const paymentSuccessOrder = $("#paymentSuccessOrder");
+  const paymentSuccessAmount = $("#paymentSuccessAmount");
+  const paymentFailureTitle = $("#paymentFailureTitle");
+  const paymentFailureMessage = $("#paymentFailureMessage");
+  const paymentFailureAmount = $("#paymentFailureAmount");
+  const paymentUnknownAmount = $("#paymentUnknownAmount");
+  let pendingSuccess = null;
+  let activeCategory = "all";
 
   // ============================================
   // CART PERSISTENCE
@@ -356,16 +367,38 @@
   // ============================================
   // RENDER PRODUCTS
   // ============================================
+  function renderCategoryFilters() {
+    if (!categoryFilters) return;
+
+    const categories = ["all", ...new Set(products.map((product) => product.category))];
+    categoryFilters.innerHTML = categories
+      .map((category) => {
+        const label = category === "all" ? "All cards" : category.replace(/^./, (letter) => letter.toUpperCase());
+        const isActive = activeCategory === category;
+        return `<button type="button" class="category-pill ${isActive ? "active" : ""}" data-category="${category}" role="tab" aria-selected="${isActive}">${label}</button>`;
+      })
+      .join("");
+
+    categoryFilters.querySelectorAll("[data-category]").forEach((button) => {
+      button.addEventListener("click", () => {
+        activeCategory = button.dataset.category;
+        renderCategoryFilters();
+        renderProducts(getActiveSearch());
+      });
+    });
+  }
+
   function renderProducts(filter = "") {
     const query = filter.toLowerCase().trim();
-    const filtered = query
-      ? products.filter(
-          (p) =>
-            p.name.toLowerCase().includes(query) ||
-            p.desc.toLowerCase().includes(query) ||
-            p.category.toLowerCase().includes(query),
-        )
-      : products;
+    const filtered = products.filter((p) => {
+      const matchesCategory = activeCategory === "all" || p.category === activeCategory;
+      const matchesSearch =
+        !query ||
+        p.name.toLowerCase().includes(query) ||
+        p.desc.toLowerCase().includes(query) ||
+        p.category.toLowerCase().includes(query);
+      return matchesCategory && matchesSearch;
+    });
 
     if (filtered.length === 0) {
       productGrid.innerHTML = "";
@@ -379,41 +412,42 @@
         const inCart = cart.find((c) => c.id === p.id);
         const qty = inCart ? inCart.quantity : 0;
         return `
-        <div class="product-card bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col">
-          <div class="card-visual h-44 flex items-center justify-center relative" style="background: linear-gradient(to bottom right, ${getGradientColors(p.color)})">
-            <span class="text-6xl drop-shadow-lg">${p.icon}</span>
-            <div class="absolute top-3 right-3 bg-white/20 backdrop-blur-sm text-white text-xs font-semibold px-2.5 py-1 rounded-full uppercase tracking-wide">
-              ${p.category}
-            </div>
+        <article class="product-card">
+          <div class="card-visual" style="background: linear-gradient(135deg, ${getGradientColors(p.color)})">
+            <span class="card-icon">${p.icon}</span>
+            <span class="card-category">${p.category}</span>
           </div>
-          <div class="p-5 flex flex-col flex-1">
-            <h3 class="font-bold text-gray-900 text-lg mb-1">${p.name}</h3>
-            <p class="text-gray-500 text-sm mb-4 flex-1">${p.desc}</p>
-            <div class="flex items-center justify-between mt-auto">
-              <span class="text-2xl font-bold text-brand-600">$${p.price.toFixed(2)}</span>
+          <div class="product-card-body">
+            <div class="product-card-copy">
+              <span class="delivery-badge">&#9889; Digital delivery</span>
+              <h3>${p.name}</h3>
+              <p>${p.desc}</p>
+            </div>
+            <div class="product-card-footer">
+              <span class="product-price">$${p.price.toFixed(2)}</span>
               ${
                 qty > 0
                   ? `
-                <div class="flex items-center gap-2">
-                  <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
-                    <button onclick="event.stopPropagation(); app.updateQuantity(${p.id}, -1)" class="px-3 py-2 text-gray-600 hover:bg-gray-100 transition text-sm font-bold" aria-label="Decrease quantity">-</button>
-                    <span class="px-3 py-2 text-sm font-semibold text-gray-900 min-w-[2rem] text-center">${qty}</span>
-                    <button onclick="event.stopPropagation(); app.updateQuantity(${p.id}, 1)" class="px-3 py-2 text-gray-600 hover:bg-gray-100 transition text-sm font-bold" ${qty >= MAX_QTY ? "disabled" : ""} aria-label="Increase quantity">+</button>
+                <div class="product-actions">
+                  <div class="quantity-control">
+                    <button onclick="event.stopPropagation(); app.updateQuantity(${p.id}, -1)" aria-label="Decrease quantity">-</button>
+                    <span>${qty}</span>
+                    <button onclick="event.stopPropagation(); app.updateQuantity(${p.id}, 1)" ${qty >= MAX_QTY ? "disabled" : ""} aria-label="Increase quantity">+</button>
                   </div>
-                  <button onclick="event.stopPropagation(); app.addToCart(${p.id})" class="bg-brand-500 hover:bg-brand-600 text-white font-semibold px-4 py-2 rounded-lg transition text-sm">
+                  <button onclick="event.stopPropagation(); app.addToCart(${p.id})" class="add-button">
                     Add
                   </button>
                 </div>
               `
                   : `
-                <button onclick="event.stopPropagation(); app.addToCart(${p.id})" class="bg-brand-500 hover:bg-brand-600 text-white font-semibold px-5 py-2.5 rounded-lg transition text-sm">
-                  Add to Cart
+                <button onclick="event.stopPropagation(); app.addToCart(${p.id})" class="add-button">
+                  Add <span aria-hidden="true">+</span>
                 </button>
               `
               }
             </div>
           </div>
-        </div>
+        </article>
       `;
       })
       .join("");
@@ -467,30 +501,33 @@
     cartItemsEl.innerHTML = cart
       .map(
         (item) => `
-      <div class="flex gap-3 bg-gray-50 rounded-xl p-3">
-        <div class="w-14 h-14 rounded-lg bg-gradient-to-br ${item.color} flex items-center justify-center flex-shrink-0">
-          <span class="text-2xl">${item.icon}</span>
-        </div>
-        <div class="flex-1 min-w-0">
-          <div class="flex items-start justify-between gap-2">
-            <p class="font-semibold text-gray-900 text-sm truncate">${item.product}</p>
-            <button onclick="app.removeFromCart(${item.id})" class="text-gray-400 hover:text-red-500 transition flex-shrink-0" title="Remove" aria-label="Remove ${item.product}">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-              </svg>
-            </button>
+      <article class="cart-item-card">
+        <div class="cart-item-topline">
+          <div class="cart-item-thumbnail bg-gradient-to-br ${item.color}">
+            <span>${item.icon}</span>
           </div>
-          <p class="text-xs text-gray-500 mb-2">${item.card_type}</p>
-          <div class="flex items-center justify-between">
-            <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden bg-white">
-              <button onclick="app.updateQuantity(${item.id}, -1)" class="px-2.5 py-1 text-gray-600 hover:bg-gray-100 transition text-xs font-bold" aria-label="Decrease quantity">-</button>
-              <span class="px-2.5 py-1 text-xs font-semibold text-gray-900 min-w-[1.75rem] text-center">${item.quantity}</span>
-              <button onclick="app.updateQuantity(${item.id}, 1)" class="px-2.5 py-1 text-gray-600 hover:bg-gray-100 transition text-xs font-bold" ${item.quantity >= MAX_QTY ? "disabled" : ""} aria-label="Increase quantity">+</button>
+          <div class="cart-item-info">
+            <div class="cart-item-title-row">
+              <div>
+                <h3>${item.product}</h3>
+                <p>${item.card_type}</p>
+              </div>
+              <button onclick="app.removeFromCart(${item.id})" class="cart-remove-button" title="Remove" aria-label="Remove ${item.product}">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M10 11v6m4-6v6M6 7l1 13h10l1-13M9 7V4h6v3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
             </div>
-            <span class="font-bold text-sm text-gray-900">$${(item.price * item.quantity).toFixed(2)}</span>
+            <span class="cart-delivery-label"><span aria-hidden="true">&#9889;</span> Digital delivery</span>
           </div>
         </div>
-      </div>
+        <div class="cart-item-bottomline">
+          <div class="cart-quantity-control" aria-label="Quantity controls">
+            <button onclick="app.updateQuantity(${item.id}, -1)" aria-label="Decrease quantity">-</button>
+            <span>${item.quantity}</span>
+            <button onclick="app.updateQuantity(${item.id}, 1)" ${item.quantity >= MAX_QTY ? "disabled" : ""} aria-label="Increase quantity">+</button>
+          </div>
+          <strong class="cart-item-price">$${(item.price * item.quantity).toFixed(2)}</strong>
+        </div>
+      </article>
     `,
       )
       .join("");
@@ -614,7 +651,7 @@
   // ============================================
   function updatePayButton() {
     const total = getCartTotal();
-    payNowBtn.textContent = `Pay $${total.toFixed(2)}`;
+    payNowBtn.innerHTML = `<span class="pay-button-label"><svg class="lock-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none"><rect x="5" y="10" width="14" height="10" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Pay Securely <span id="payAmount">$${total.toFixed(2)}</span></span>`;
     payNowBtn.disabled = cart.length === 0;
   }
 
@@ -692,6 +729,71 @@
   $("#googlePayBtn").addEventListener("click", () => handleCheckout());
   $("#paypalBtn").addEventListener("click", () => handleCheckout());
 
+  function setPaymentOverlayState(state, details = {}) {
+    processingOverlay.classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+    paymentStatusStates.forEach((stateEl) => {
+      stateEl.classList.toggle("hidden", stateEl.dataset.paymentState !== state);
+    });
+    const activeState = document.querySelector(`[data-payment-state="${state}"]`);
+    const activeTitle = activeState?.querySelector("h2");
+    if (activeTitle) {
+      activeTitle.id ||= `paymentStatusTitle-${state}`;
+      paymentStatusDialog?.setAttribute("aria-labelledby", activeTitle.id);
+    }
+
+    const total = `$${getCartTotal().toFixed(2)}`;
+    if (paymentSuccessOrder) paymentSuccessOrder.textContent = details.orderId ? `#${details.orderId}` : "#--";
+    if (paymentSuccessAmount) paymentSuccessAmount.textContent = total;
+    if (paymentFailureAmount) paymentFailureAmount.textContent = total;
+    if (paymentUnknownAmount) paymentUnknownAmount.textContent = total;
+    if (paymentFailureTitle) paymentFailureTitle.textContent = details.declined ? "Card Declined" : "Payment Failed";
+    if (paymentFailureMessage) {
+      paymentFailureMessage.textContent = details.declined
+        ? "Please verify your card details or try another payment method."
+        : "Your payment was not completed. Please check your payment details or try another payment method.";
+    }
+  }
+
+  function closePaymentOverlay() {
+    processingOverlay.classList.add("hidden");
+    document.body.style.overflow = "";
+  }
+
+  function restorePaymentForm() {
+    closePaymentOverlay();
+    updatePayButton();
+    cardNumberInput.value = "";
+    cardExpiryInput.value = "";
+    cardCvvInput.value = "";
+    updateCardBrandVisual(null);
+    cardNumberInput.focus();
+  }
+
+  $("#continueOrderBtn").addEventListener("click", () => {
+    if (!pendingSuccess) return;
+    const completedOrder = pendingSuccess;
+    pendingSuccess = null;
+    closePaymentOverlay();
+    showSuccessPage(completedOrder.orderData, completedOrder.emailSent);
+  });
+
+  $("#retryPaymentBtn").addEventListener("click", restorePaymentForm);
+  $("#changePaymentMethodBtn").addEventListener("click", () => {
+    closePaymentOverlay();
+    updatePayButton();
+    document.querySelector(".payment-card")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+  $("#returnCheckoutBtn").addEventListener("click", () => {
+    closePaymentOverlay();
+    updatePayButton();
+  });
+  $("#returnCartBtn").addEventListener("click", () => {
+    closePaymentOverlay();
+    updatePayButton();
+    openCart();
+  });
+
   // ============================================
   // CHECKOUT SUBMIT
   // ============================================
@@ -720,11 +822,11 @@
 
     // Disable button
     payNowBtn.disabled = true;
-    const originalText = payNowBtn.textContent;
     payNowBtn.textContent = "Processing...";
 
-    // Show processing overlay
-    processingOverlay.classList.remove("hidden");
+    // Show an in-progress state while the payment provider request is pending.
+    setPaymentOverlayState("processing");
+    setPaymentOverlayState("verifying");
 
     try {
       // Mock payment — pass card details for validation
@@ -743,10 +845,10 @@
       });
 
       if (!paymentResult.success) {
-        processingOverlay.classList.add("hidden");
-        payNowBtn.disabled = false;
-        payNowBtn.textContent = originalText;
-        alert(paymentResult.error || "Payment failed. Please try again.");
+        updatePayButton();
+        setPaymentOverlayState("failed", {
+          declined: /declined/i.test(paymentResult.error || "") || paymentResult.status === "declined",
+        });
         return;
       }
 
@@ -792,15 +894,13 @@
       saveCart();
       renderCartItems();
 
-      // Hide processing, navigate to success
-      processingOverlay.classList.add("hidden");
-      showSuccessPage(orderData, emailSent);
+      // Show success only after payment confirmation and the existing email attempt.
+      pendingSuccess = { orderData, emailSent };
+      setPaymentOverlayState("success", { orderId: orderData.order_id });
     } catch (err) {
       console.error("[Checkout] Error:", err);
-      processingOverlay.classList.add("hidden");
-      payNowBtn.disabled = false;
-      payNowBtn.textContent = originalText;
-      alert("Something went wrong. Please try again.");
+      updatePayButton();
+      setPaymentOverlayState("unknown");
     }
   }
 
@@ -889,6 +989,7 @@
   // INIT
   // ============================================
   updateCartBadge();
+  renderCategoryFilters();
   renderProducts();
 
   // Safety fallback: re-render after a tick in case DOM wasn't ready
