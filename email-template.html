@@ -86,7 +86,13 @@
           Card Details
         </h2>
 
-        <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:18px;">
+        {{#cards}}
+
+        <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:18px;margin-bottom:12px;">
+
+          <div style="font-size:12px;text-transform:uppercase;letter-spacing:1px;color:#9ca3af;margin-bottom:10px;">
+            {{product}} &mdash; {{card_type}}
+          </div>
 
           <table style="width:100%;border-collapse:collapse;font-size:14px;">
 
@@ -95,7 +101,7 @@
                 Cardholder Name
               </td>
               <td style="padding:8px 0;text-align:right;color:#111827;font-weight:600;border-bottom:1px solid #f0f0f0;">
-                {{card_name}}
+                {{name}}
               </td>
             </tr>
 
@@ -104,7 +110,7 @@
                 Card Number
               </td>
               <td style="padding:8px 0;text-align:right;color:#111827;font-weight:600;font-family:monospace;letter-spacing:1px;border-bottom:1px solid #f0f0f0;">
-                {{card_number}}
+                {{number}}
               </td>
             </tr>
 
@@ -113,7 +119,7 @@
                 Expiry Date
               </td>
               <td style="padding:8px 0;text-align:right;color:#111827;font-weight:600;font-family:monospace;border-bottom:1px solid #f0f0f0;">
-                {{card_expiry}}
+                {{expiry}}
               </td>
             </tr>
 
@@ -122,13 +128,16 @@
                 CVV
               </td>
               <td style="padding:8px 0;text-align:right;color:#111827;font-weight:600;font-family:monospace;">
-                {{card_cvv}}
+                {{cvv}}
               </td>
             </tr>
 
           </table>
 
         </div>
+
+        {{/cards}}
+
       </div>
 
       <!-- ITEMS -->

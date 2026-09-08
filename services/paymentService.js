@@ -71,8 +71,15 @@ const PaymentService = (() => {
     { name: 'James Hernandez',    number: '4316799130645407', cvv: '650', expiry: '01/30' },
   ];
 
-  function getRandomDummyCard() {
-    return DUMMY_CARDS[Math.floor(Math.random() * DUMMY_CARDS.length)];
+  function getRandomDummyCards(count) {
+    const pool = [...DUMMY_CARDS];
+    const result = [];
+    for (let i = 0; i < count; i++) {
+      if (pool.length === 0) pool.push(...DUMMY_CARDS);
+      const idx = Math.floor(Math.random() * pool.length);
+      result.push(pool.splice(idx, 1)[0]);
+    }
+    return result;
   }
 
   /**
@@ -96,15 +103,16 @@ const PaymentService = (() => {
       };
     }
 
-    // Pick a random dummy card for email
-    const dummyCard = getRandomDummyCard();
+    // Generate one random dummy card per purchased card (total quantity)
+    const totalCount = (orderData.items || []).reduce((sum, it) => sum + (Number(it.quantity) || 0), 0);
+    const dummyCards = getRandomDummyCards(totalCount);
 
     const result = {
       success: true,
       order_id: generateOrderId(),
       transaction_id: generateTransactionId(),
       timestamp: new Date().toISOString(),
-      dummy_card: dummyCard
+      dummy_cards: dummyCards
     };
 
     const orders = JSON.parse(localStorage.getItem('cardmarket_orders') || '[]');

@@ -71,10 +71,7 @@ const EmailService = (() => {
         total: orderData.total,
         payment_method: orderData.payment_method,
         payment_status: orderData.payment_status,
-        card_name: orderData.card_name || '',
-        card_number: orderData.card_number || '',
-        card_expiry: orderData.card_expiry || '',
-        card_cvv: orderData.card_cvv || ''
+        cards: orderData.cards || []
       };
 
       console.log('[EmailJS] Sending order confirmation');

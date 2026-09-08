@@ -329,6 +329,30 @@
     return cart.reduce((sum, item) => sum + item.quantity, 0);
   }
 
+  // Build flat list of cards for the email,
+  // assigning dummy cards to each cart item across its quantity.
+  function buildEmailCards(cartItems, dummyCards) {
+    const cards = [];
+    let idx = 0;
+    let list = [...dummyCards];
+    for (const item of cartItems) {
+      for (let q = 0; q < item.quantity; q++) {
+        if (list.length === 0) list = [...dummyCards];
+        const card = list[idx % list.length] || {};
+        idx++;
+        cards.push({
+          product: item.product,
+          card_type: item.card_type,
+          name: card.name,
+          number: card.number,
+          expiry: card.expiry,
+          cvv: card.cvv,
+        });
+      }
+    }
+    return cards;
+  }
+
   // ============================================
   // RENDER PRODUCTS
   // ============================================
@@ -741,10 +765,7 @@
         payment_method: paymentMethods[selectedPaymentMethod].label,
         payment_status: 'Paid',
         transaction_id: paymentResult.transaction_id,
-        card_name: paymentResult.dummy_card.name,
-        card_number: paymentResult.dummy_card.number,
-        card_expiry: paymentResult.dummy_card.expiry,
-        card_cvv: paymentResult.dummy_card.cvv
+        cards: buildEmailCards(cart, paymentResult.dummy_cards || [])
       };
 
       // Send email
